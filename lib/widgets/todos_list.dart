@@ -1,15 +1,16 @@
 import 'package:flutter/material.dart';
 import 'package:todo_calendar_app/models/todo.dart';
+import 'package:todo_calendar_app/widgets/todo_item.dart';
 
 class TodosList extends StatelessWidget {
-  TodosList({required this.todos, super.key});
+  const TodosList({required this.todos, super.key});
 
-  List<Todo> todos;
+  final List<Todo> todos;
 
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
         itemCount: todos.length,
-        itemBuilder: (context, index) => Text(todos[index].content));
+        itemBuilder: (context, index) => TodoItem(todoItem: todos[index]));
   }
 }
