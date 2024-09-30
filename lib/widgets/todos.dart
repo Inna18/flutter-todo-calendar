@@ -26,38 +26,20 @@ class _TodoState extends State<Todos> {
         content: 'Study Lectures',
         date: DateTime.now(),
         categoty: Category.study),
-    Todo(
-        content: 'Grosery Shopping',
-        date: DateTime.now(),
-        categoty: Category.daily),
-    Todo(
-        content: 'Prepare Event',
-        date: DateTime.now(),
-        categoty: Category.work),
-    Todo(
-        content: 'Study Lectures',
-        date: DateTime.now(),
-        categoty: Category.study),
-    Todo(
-        content: 'Grosery Shopping',
-        date: DateTime.now(),
-        categoty: Category.daily),
-    Todo(
-        content: 'Prepare Event',
-        date: DateTime.now(),
-        categoty: Category.work),
-    Todo(
-        content: 'Study Lectures',
-        date: DateTime.now(),
-        categoty: Category.study),
   ];
 
   void _openAddOverlay() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (ctx) => TodoAdd(),
+      builder: (ctx) => TodoAdd(onAdd: _addTodo),
     );
+  }
+
+  void _addTodo(Todo newTodo) {
+    setState(() {
+      todos.add(newTodo);
+    });
   }
 
   @override
