@@ -20,6 +20,22 @@ class _TodoAddState extends State<TodoAdd> {
   final _contentController = TextEditingController();
 
   void _addTodo() {
+    if (_contentController.text.isEmpty) {
+      showDialog(
+          context: context,
+          builder: (ctx) => AlertDialog(
+                title: const Text('Error'),
+                content: const Text('To do field is empty.'),
+                actions: [
+                  TextButton(
+                    onPressed: () => Navigator.pop(ctx),
+                    child: const Text('Ok'),
+                  )
+                ],
+              ));
+      return;
+    }
+
     final newTodo = Todo(
         content: _contentController.text,
         date: _selectedDates[0],
