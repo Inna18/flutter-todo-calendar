@@ -42,6 +42,28 @@ class _TodoState extends State<Todos> {
     });
   }
 
+  void _removeTodo(Todo removeTodo) {
+    final indexOfTodo = todos.indexOf(removeTodo);
+
+    setState(() {
+      todos.remove(removeTodo);
+    });
+
+    ScaffoldMessenger.of(context).clearSnackBars();
+    ScaffoldMessenger.of(context).showSnackBar(SnackBar(
+      duration: const Duration(seconds: 3),
+      content: const Text('Task deleted.'),
+      action: SnackBarAction(
+        label: 'Undo',
+        onPressed: () {
+          setState(() {
+            todos.insert(indexOfTodo, removeTodo);
+          });
+        },
+      ),
+    ));
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -54,9 +76,7 @@ class _TodoState extends State<Todos> {
       body: Column(
         children: [
           Expanded(
-            child: TodosList(
-              todos: todos,
-            ),
+            child: TodosList(todos: todos, onRemoveTodo: _removeTodo),
           ),
         ],
       ),
