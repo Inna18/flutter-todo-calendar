@@ -50,7 +50,7 @@ class _TodoAddState extends State<TodoAdd> {
     initializeDateFormatting(Localizations.localeOf(context).languageCode);
 
     final config = CalendarDatePicker2Config(
-        selectedDayHighlightColor: Colors.blue[900],
+        selectedDayHighlightColor: Colors.blue[400],
         weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
         weekdayLabelTextStyle: const TextStyle(
           color: Colors.black87,
