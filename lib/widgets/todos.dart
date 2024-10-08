@@ -15,17 +15,20 @@ class Todos extends StatefulWidget {
 class _TodoState extends State<Todos> {
   List<Todo> todos = [
     Todo(
+        id: uuid.v4(),
         content: 'Grosery Shopping',
         date: DateTime.now(),
-        categoty: Category.daily),
+        category: Category.daily),
     Todo(
+        id: uuid.v4(),
         content: 'Prepare Event',
         date: DateTime.now(),
-        categoty: Category.work),
+        category: Category.work),
     Todo(
+        id: uuid.v4(),
         content: 'Study Lectures',
         date: DateTime.now(),
-        categoty: Category.study),
+        category: Category.study),
   ];
 
   void _openAddOverlay() {
@@ -64,6 +67,15 @@ class _TodoState extends State<Todos> {
     ));
   }
 
+  void _editTodo(Todo editedTodo) {
+    final editTodo = todos.where((todo) => todo.id == editedTodo.id).first;
+    final index = todos.indexOf(editTodo);
+    setState(() {
+      todos.remove(editTodo);
+      todos.insert(index, editedTodo);
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -76,7 +88,8 @@ class _TodoState extends State<Todos> {
       body: Column(
         children: [
           Expanded(
-            child: TodosList(todos: todos, onRemoveTodo: _removeTodo),
+            child: TodosList(
+                todos: todos, onRemoveTodo: _removeTodo, onEditTodo: _editTodo),
           ),
         ],
       ),

@@ -7,10 +7,9 @@ final formatter = DateFormat.yMd();
 enum Category { daily, work, study }
 
 class Todo {
-  Todo({required this.content, required this.date, required this.categoty})
-      : id = uuid.v4();
+  Todo({required this.id, required this.content, required this.date, required this.category});
   final String id;
   final String content;
   final DateTime date;
-  final Category categoty;
+  final Category category;
 }

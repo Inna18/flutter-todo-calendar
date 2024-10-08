@@ -3,10 +3,11 @@ import 'package:todo_calendar_app/models/todo.dart';
 import 'package:todo_calendar_app/widgets/todo_item.dart';
 
 class TodosList extends StatelessWidget {
-  const TodosList({required this.todos, required this.onRemoveTodo, super.key});
+  const TodosList({required this.todos, required this.onRemoveTodo, required this.onEditTodo, super.key});
 
   final List<Todo> todos;
   final void Function(Todo removeTodo) onRemoveTodo;
+  final void Function(Todo editTodo) onEditTodo;
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +23,7 @@ class TodosList extends StatelessWidget {
         key: ValueKey(todos[index]),
         direction: DismissDirection.endToStart,
         onDismissed: (direction) => onRemoveTodo(todos[index]),
-        child: TodoItem(todoItem: todos[index]),
+        child: TodoItem(todoItem: todos[index], onEditTodo: onEditTodo),
       ),
     );
   }

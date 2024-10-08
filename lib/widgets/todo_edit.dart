@@ -1,25 +1,34 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
+import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:todo_calendar_app/models/todo.dart';
 
-class TodoAdd extends StatefulWidget {
-  const TodoAdd({required this.onAdd, super.key});
+class TodoEdit extends StatefulWidget {
+  const TodoEdit({required this.item, required this.onEditTodo, super.key});
 
-  final void Function(Todo todo) onAdd;
+  final Todo item;
+  final void Function(Todo editedTodo) onEditTodo;
 
   @override
   State<StatefulWidget> createState() {
-    return _TodoAddState();
+    return _TodoEditState();
   }
 }
 
-class _TodoAddState extends State<TodoAdd> {
-  List<DateTime> _selectedDates = [DateTime.now()];
+class _TodoEditState extends State<TodoEdit> {
+  List<DateTime> _selectedDates = [];
   Category _selectedCategory = Category.daily;
   final _contentController = TextEditingController();
 
-  void _addTodo() {
+  @override
+  void initState() {
+    super.initState();
+    _selectedDates = [widget.item.date];
+    _selectedCategory = widget.item.category;
+    _contentController.text = widget.item.content;
+  }
+
+  void _editTodo() {
     if (_contentController.text.isEmpty) {
       showDialog(
           context: context,
@@ -36,13 +45,13 @@ class _TodoAddState extends State<TodoAdd> {
       return;
     }
 
-    final newTodo = Todo(
-        id: uuid.v4(),
+    final editedTodo = Todo(
+        id: widget.item.id,
         content: _contentController.text,
         date: _selectedDates[0],
         category: _selectedCategory);
 
-    widget.onAdd(newTodo);
+    widget.onEditTodo(editedTodo);
     Navigator.pop(context);
   }
 
@@ -109,7 +118,7 @@ class _TodoAddState extends State<TodoAdd> {
                     width: 300,
                     child: CalendarDatePicker2(
                       config: config,
-                      value: [DateTime.now()],
+                      value: [_selectedDates[0]],
                       onValueChanged: (value) {
                         _selectedDates = value;
                       },
@@ -163,7 +172,7 @@ class _TodoAddState extends State<TodoAdd> {
                 TextButton(
                     onPressed: () => Navigator.pop(context),
                     child: const Text('Cancel')),
-                ElevatedButton(onPressed: _addTodo, child: const Text('Save'))
+                ElevatedButton(onPressed: _editTodo, child: const Text('Edit'))
               ],
             )
           ],
