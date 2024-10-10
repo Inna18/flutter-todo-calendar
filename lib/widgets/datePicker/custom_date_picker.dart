@@ -66,30 +66,44 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
 
   @override
   Widget build(BuildContext context) {
-    void _toPrevMonth() {
-      print('prev');
+    void rerenderDates() {
+      prevMLastDay = (DateTime(_today.year, _today.month, 0).day);
+      currentMLastDay = (DateTime(_today.year, _today.month + 1, 0).day);
+      prevMLastWeekday = (DateTime(_today.year, _today.month, 0).weekday) % 7;
+      currentMFirstWeekday = (DateTime(_today.year, _today.month).weekday) % 7;
+      firstDay = prevMLastWeekday == 6
+          ? 0
+          : DateTime(_today.year, _today.month, 0).day - prevMLastWeekday;
+      lastDay = 7 - (DateTime(_today.year, _today.month + 1).weekday);
+    }
+
+    void toPrevMonth() {
       setState(() {
-        // change current date (month)
+        // change current date (month) to previous
         if (DateTime.now().month == 1) {
           _today = DateTime(_today.year - 1, 12);
         } else {
           _today = DateTime(_today.year, _today.month - 1);
         }
 
-        prevMLastDay = (DateTime(_today.year, _today.month, 0).day);
-        currentMLastDay = (DateTime(_today.year, _today.month + 1, 0).day);
-        prevMLastWeekday = (DateTime(_today.year, _today.month, 0).weekday) % 7;
-        currentMFirstWeekday =
-            (DateTime(_today.year, _today.month).weekday) % 7;
-        firstDay = prevMLastWeekday == 6
-            ? 0
-            : DateTime(_today.year, _today.month, 0).day - prevMLastWeekday;
-        lastDay = 7 - (DateTime(_today.year, _today.month + 1).weekday);
+        rerenderDates();
       });
       setCalendar();
     }
 
-    void _toNextMonth() {}
+    void toNextMonth() {
+      setState(() {
+        // change current date (month) to next
+        if (DateTime.now().month == 12) {
+          _today = DateTime(_today.year + 1, 1);
+        } else {
+          _today = DateTime(_today.year, _today.month + 1);
+        }
+
+        rerenderDates();
+      });
+      setCalendar();
+    }
 
     return Container(
       height: 320,
@@ -97,7 +111,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         children: [
           Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
             IconButton(
-                onPressed: _toPrevMonth,
+                onPressed: toPrevMonth,
                 icon: const Icon(
                   Icons.chevron_left,
                 )),
@@ -106,7 +120,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
               style: const TextStyle(fontSize: 16),
             ),
             IconButton(
-                onPressed: _toNextMonth,
+                onPressed: toNextMonth,
                 icon: const Icon(
                   Icons.chevron_right,
                 )),
