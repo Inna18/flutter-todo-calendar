@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_calendar_app/models/todo.dart';
-import 'package:todo_calendar_app/widgets/todo_edit.dart';
+import 'package:todo_calendar_app/widgets/todo/todo_edit.dart';
 
 class TodoItem extends StatefulWidget {
   const TodoItem({required this.todoItem, required this.onEditTodo, super.key});

@@ -2,6 +2,7 @@ import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/date_symbol_data_local.dart';
 import 'package:todo_calendar_app/models/todo.dart';
+import 'package:todo_calendar_app/widgets/datePicker/custom_date_picker.dart';
 
 class TodoAdd extends StatefulWidget {
   const TodoAdd({required this.onAdd, super.key});
@@ -106,15 +107,17 @@ class _TodoAddState extends State<TodoAdd> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 300,
-                    child: CalendarDatePicker2(
-                      config: config,
-                      value: [DateTime.now()],
-                      onValueChanged: (value) {
-                        _selectedDates = value;
-                      },
-                    ),
-                  )
+                      width: 300,
+                      // child: CalendarDatePicker2(
+                      //   config: config,
+                      //   value: [DateTime.now()],
+                      //   onValueChanged: (value) {
+                      //     _selectedDates = value;
+                      //   },
+                      // ),
+                      child: CustomDatePicker(
+                        selectedDate: DateTime.now(),
+                      ))
                 ],
               ),
             ),

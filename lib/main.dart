@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:todo_calendar_app/widgets/todos.dart';
+import 'package:todo_calendar_app/widgets/todo/todos.dart';
 
 var kColorScheme =
     ColorScheme.fromSeed(seedColor: const Color.fromRGBO(144, 202, 249, 1));
@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.normal)),
       ),
-      themeMode: ThemeMode.system,
+      themeMode: ThemeMode.light,
       home: const Todos(),
     );
   }

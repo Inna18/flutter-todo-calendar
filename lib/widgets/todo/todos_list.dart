@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:todo_calendar_app/models/todo.dart';
-import 'package:todo_calendar_app/widgets/todo_item.dart';
+import 'package:todo_calendar_app/widgets/todo/todo_item.dart';
 
 class TodosList extends StatelessWidget {
   const TodosList({required this.todos, required this.onRemoveTodo, required this.onEditTodo, super.key});

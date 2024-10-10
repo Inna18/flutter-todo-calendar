@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_calendar_app/models/todo.dart';
-import 'package:todo_calendar_app/widgets/todo_add.dart';
-import 'package:todo_calendar_app/widgets/todos_list.dart';
+import 'package:todo_calendar_app/widgets/todo/todo_add.dart';
+import 'package:todo_calendar_app/widgets/todo/todos_list.dart';
 
 class Todos extends StatefulWidget {
   const Todos({super.key});
