@@ -1,3 +1,5 @@
+import 'dart:ffi';
+
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
@@ -59,7 +61,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       nextMonth.add(i);
     }
     setState(() {
-      print(calendar);
       calendar = [prevMonth, currentMonth, nextMonth];
     });
   }
@@ -85,7 +86,6 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         } else {
           _today = DateTime(_today.year, _today.month - 1);
         }
-
         rerenderDates();
       });
       setCalendar();
@@ -99,13 +99,16 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         } else {
           _today = DateTime(_today.year, _today.month + 1);
         }
-
         rerenderDates();
       });
       setCalendar();
     }
 
-    return Container(
+    bool isToday(int day) {
+      return _today.month == DateTime.now().month && DateTime.now().day == day;
+    }
+
+    return SizedBox(
       height: 320,
       child: Column(
         children: [
@@ -170,11 +173,19 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                   height: 32,
                   width: 36,
                   child: Align(
-                    alignment: Alignment.center,
-                    child: Text(
-                      day.toString(),
-                    ),
-                  ))),
+                      alignment: Alignment.center,
+                      child: isToday(day)
+                          ? Container(
+                              padding: const EdgeInsets.symmetric(
+                                  horizontal: 6, vertical: 4),
+                              decoration: BoxDecoration(
+                                  borderRadius: BorderRadius.circular(50),
+                                  border: Border.all(
+                                      color: const Color.fromRGBO(
+                                          33, 150, 243, 1))),
+                              child: Text(day.toString()),
+                            )
+                          : Text(day.toString())))),
               ...calendar[2].map((day) => SizedBox(
                   height: 32,
                   width: 36,
