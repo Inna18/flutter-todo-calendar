@@ -39,6 +39,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
             prevMLastWeekday;
     lastDay =
         7 - (DateTime(DateTime.now().year, DateTime.now().month + 1).weekday);
+    setCalendar();
   }
 
   void setCalendar() {
@@ -46,8 +47,10 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     List<int> currentMonth = [];
     List<int> nextMonth = [];
 
-    for (int i = firstDay; i <= prevMLastDay; i++) {
-      prevMonth.add(i);
+    if (firstDay != 0) {
+      for (int i = firstDay; i <= prevMLastDay; i++) {
+        prevMonth.add(i);
+      }
     }
     for (int i = 1; i <= currentMLastDay; i++) {
       currentMonth.add(i);
@@ -56,21 +59,58 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
       nextMonth.add(i);
     }
     setState(() {
+      print(calendar);
       calendar = [prevMonth, currentMonth, nextMonth];
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    setCalendar();
+    void _toPrevMonth() {
+      print('prev');
+      setState(() {
+        // change current date (month)
+        if (DateTime.now().month == 1) {
+          _today = DateTime(_today.year - 1, 12);
+        } else {
+          _today = DateTime(_today.year, _today.month - 1);
+        }
+
+        prevMLastDay = (DateTime(_today.year, _today.month, 0).day);
+        currentMLastDay = (DateTime(_today.year, _today.month + 1, 0).day);
+        prevMLastWeekday = (DateTime(_today.year, _today.month, 0).weekday) % 7;
+        currentMFirstWeekday =
+            (DateTime(_today.year, _today.month).weekday) % 7;
+        firstDay = prevMLastWeekday == 6
+            ? 0
+            : DateTime(_today.year, _today.month, 0).day - prevMLastWeekday;
+        lastDay = 7 - (DateTime(_today.year, _today.month + 1).weekday);
+      });
+      setCalendar();
+    }
+
+    void _toNextMonth() {}
 
     return Container(
+      height: 320,
       child: Column(
         children: [
-          Text(
-            DateFormat('yyyy.MM').format(_today),
-            style: const TextStyle(fontSize: 16),
-          ),
+          Row(mainAxisAlignment: MainAxisAlignment.spaceBetween, children: [
+            IconButton(
+                onPressed: _toPrevMonth,
+                icon: const Icon(
+                  Icons.chevron_left,
+                )),
+            Text(
+              DateFormat('yyyy.MM').format(_today),
+              style: const TextStyle(fontSize: 16),
+            ),
+            IconButton(
+                onPressed: _toNextMonth,
+                icon: const Icon(
+                  Icons.chevron_right,
+                )),
+          ]),
           const SizedBox(
             height: 8,
           ),

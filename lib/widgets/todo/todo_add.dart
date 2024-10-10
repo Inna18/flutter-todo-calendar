@@ -158,7 +158,7 @@ class _TodoAddState extends State<TodoAdd> {
                 )
               ],
             ),
-            const SizedBox(height: 160),
+            const SizedBox(height: 100),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
