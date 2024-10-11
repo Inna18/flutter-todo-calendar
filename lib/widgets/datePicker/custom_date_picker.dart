@@ -119,7 +119,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
         _selectedDate = DateTime(_today.year, _today.month + 1, day);
       }
 
-      print(_selectedDate);
+      widget.selectDate(_selectedDate!);
     }
 
     return SizedBox(

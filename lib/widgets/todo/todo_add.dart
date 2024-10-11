@@ -16,7 +16,7 @@ class TodoAdd extends StatefulWidget {
 }
 
 class _TodoAddState extends State<TodoAdd> {
-  List<DateTime> _selectedDates = [DateTime.now()];
+  DateTime _selectedDate = DateTime.now();
   Category _selectedCategory = Category.daily;
   final _contentController = TextEditingController();
 
@@ -40,14 +40,18 @@ class _TodoAddState extends State<TodoAdd> {
     final newTodo = Todo(
         id: uuid.v4(),
         content: _contentController.text,
-        date: _selectedDates[0],
+        date: _selectedDate,
         category: _selectedCategory);
 
     widget.onAdd(newTodo);
     Navigator.pop(context);
   }
 
-  void selectDate(DateTime date) {}
+  void selectDate(DateTime date) {
+    setState(() {
+      _selectedDate = date;
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -110,13 +114,6 @@ class _TodoAddState extends State<TodoAdd> {
                 children: [
                   SizedBox(
                       width: 300,
-                      // child: CalendarDatePicker2(
-                      //   config: config,
-                      //   value: [DateTime.now()],
-                      //   onValueChanged: (value) {
-                      //     _selectedDates = value;
-                      //   },
-                      // ),
                       child: CustomDatePicker(
                         defaultDate: DateTime.now(),
                         selectDate: selectDate,
