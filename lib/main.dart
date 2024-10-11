@@ -67,7 +67,7 @@ class MyApp extends StatelessWidget {
                 fontSize: 20,
                 fontWeight: FontWeight.normal)),
       ),
-      themeMode: ThemeMode.light,
+      themeMode: ThemeMode.system,
       home: const Todos(),
     );
   }
