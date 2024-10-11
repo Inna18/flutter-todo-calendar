@@ -19,7 +19,7 @@ class CustomDatePicker extends StatefulWidget {
 class _CustomDatePickerState extends State<CustomDatePicker> {
   List<String> weekdays = ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'];
   DateTime _today = DateTime.now();
-  DateTime? _selectedDate = DateTime.now();
+  DateTime _selectedDate = DateTime.now();
   // Sunday = 0
   int prevMLastDay =
       (DateTime(DateTime.now().year, DateTime.now().month, 0).day);
@@ -38,6 +38,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
   void initState() {
     super.initState();
     _selectedDate = widget.defaultDate ?? DateTime.now();
+    _today = _selectedDate;
     firstDay = prevMLastWeekday == 6
         ? 0
         : DateTime(DateTime.now().year, DateTime.now().month, 0).day -
@@ -108,7 +109,9 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
     }
 
     bool isToday(int day) {
-      return _today.month == DateTime.now().month && DateTime.now().day == day;
+      return _today.year == DateTime.now().year &&
+          _today.month == DateTime.now().month &&
+          DateTime.now().day == day;
     }
 
     void setSelectedDate(int type, int day) {
@@ -189,10 +192,12 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                         padding: const EdgeInsets.symmetric(
                             horizontal: 6, vertical: 4),
                         decoration: (isSelected &&
-                                    _selectedDate!.month == _today.month - 1 &&
-                                    day == _selectedDate!.day) ||
-                                (_selectedDate!.month == _today.month - 1 &&
-                                    day == _selectedDate!.day)
+                                    _selectedDate.year == _today.year &&
+                                    _selectedDate.month == _today.month - 1 &&
+                                    day == _selectedDate.day) ||
+                                (_selectedDate.year == _today.year &&
+                                    _selectedDate.month == _today.month - 1 &&
+                                    day == _selectedDate.day)
                             ? BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blue[100])
@@ -221,10 +226,12 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                         height: 32,
                         width: 36,
                         decoration: (isSelected &&
-                                    _selectedDate!.month == _today.month &&
-                                    day == _selectedDate!.day) ||
-                                (_selectedDate!.month == _today.month &&
-                                    day == _selectedDate!.day)
+                                    _selectedDate.year == _today.year &&
+                                    _selectedDate.month == _today.month &&
+                                    day == _selectedDate.day) ||
+                                (_selectedDate.year == _today.year &&
+                                    _selectedDate.month == _today.month &&
+                                    day == _selectedDate.day)
                             ? BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blue[100])
@@ -258,10 +265,12 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                         height: 32,
                         width: 36,
                         decoration: (isSelected &&
-                                    _selectedDate!.month == _today.month + 1 &&
-                                    day == _selectedDate!.day) ||
-                                (_selectedDate!.month == _today.month + 1 &&
-                                    day == _selectedDate!.day)
+                                    _selectedDate.year == _today.year &&
+                                    _selectedDate.month == _today.month + 1 &&
+                                    day == _selectedDate.day) ||
+                                (_selectedDate.year == _today.year &&
+                                    _selectedDate.month == _today.month + 1 &&
+                                    day == _selectedDate.day)
                             ? BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blue[100])
