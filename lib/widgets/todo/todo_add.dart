@@ -1,6 +1,4 @@
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
 import 'package:flutter/material.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:todo_calendar_app/models/todo.dart';
 import 'package:todo_calendar_app/widgets/datePicker/custom_date_picker.dart';
 
@@ -55,43 +53,6 @@ class _TodoAddState extends State<TodoAdd> {
 
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting(Localizations.localeOf(context).languageCode);
-
-    final config = CalendarDatePicker2Config(
-        selectedDayHighlightColor: Colors.blue[400],
-        weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        weekdayLabelTextStyle: const TextStyle(
-          color: Colors.black87,
-          fontWeight: FontWeight.bold,
-        ),
-        firstDayOfWeek: 1,
-        controlsHeight: 50,
-        dayMaxWidth: 25,
-        animateToDisplayedMonthDate: true,
-        controlsTextStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-        ),
-        dayTextStyle: const TextStyle(
-          color: Colors.blue,
-          fontWeight: FontWeight.bold,
-        ),
-        disabledDayTextStyle: const TextStyle(
-          color: Colors.grey,
-        ),
-        centerAlignModePicker: true,
-        useAbbrLabelForMonthModePicker: true,
-        modePickersGap: 0,
-        modePickerTextHandler: ({required monthDate, isMonthPicker}) {
-          if (isMonthPicker ?? false) {
-            // Custom month picker text
-            return '${getLocaleShortMonthFormat(const Locale('en')).format(monthDate)} C';
-          }
-          return null;
-        },
-        firstDate: DateTime.now());
-
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.85,
       child: Padding(
