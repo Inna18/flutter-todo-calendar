@@ -47,6 +47,8 @@ class _TodoAddState extends State<TodoAdd> {
     Navigator.pop(context);
   }
 
+  void selectDate(DateTime date) {}
+
   @override
   Widget build(BuildContext context) {
     initializeDateFormatting(Localizations.localeOf(context).languageCode);
@@ -116,7 +118,8 @@ class _TodoAddState extends State<TodoAdd> {
                       //   },
                       // ),
                       child: CustomDatePicker(
-                        selectedDate: DateTime.now(),
+                        defaultDate: DateTime.now(),
+                        selectDate: selectDate,
                       ))
                 ],
               ),
