@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:todo_calendar_app/models/todo.dart';
 import 'package:todo_calendar_app/widgets/todo/todo_edit.dart';
+import 'package:intl/intl.dart';
 
 class TodoItem extends StatefulWidget {
   const TodoItem({required this.todoItem, required this.onEditTodo, super.key});
@@ -15,12 +16,12 @@ class TodoItem extends StatefulWidget {
 }
 
 class _TodoItemState extends State<TodoItem> {
-  
   void _openEditOverlay() {
     showModalBottomSheet(
       isScrollControlled: true,
       context: context,
-      builder: (ctx) => TodoEdit(item: widget.todoItem, onEditTodo: widget.onEditTodo),
+      builder: (ctx) =>
+          TodoEdit(item: widget.todoItem, onEditTodo: widget.onEditTodo),
     );
   }
 
@@ -33,7 +34,7 @@ class _TodoItemState extends State<TodoItem> {
           children: [
             Row(
               children: [
-                Text(formatter.format(widget.todoItem.date)),
+                Text(DateFormat('yyyy.MM.dd').format(widget.todoItem.date)),
                 const SizedBox(
                   width: 32,
                 ),
