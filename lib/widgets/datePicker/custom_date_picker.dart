@@ -4,7 +4,8 @@ import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 
 class CustomDatePicker extends StatefulWidget {
-  const CustomDatePicker({required this.defaultDate, required this.selectDate});
+  const CustomDatePicker(
+      {required this.defaultDate, required this.selectDate, super.key});
 
   final DateTime? defaultDate;
   final void Function(DateTime date) selectDate;
@@ -187,9 +188,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                         width: 36,
                         padding: const EdgeInsets.symmetric(
                             horizontal: 6, vertical: 4),
-                        decoration: isSelected &&
-                                _selectedDate!.month == _today.month - 1 &&
-                                day == _selectedDate!.day
+                        decoration: (isSelected &&
+                                    _selectedDate!.month == _today.month - 1 &&
+                                    day == _selectedDate!.day) ||
+                                (_selectedDate!.month == _today.month - 1 &&
+                                    day == _selectedDate!.day)
                             ? BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blue[100])
@@ -217,9 +220,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                     child: Container(
                         height: 32,
                         width: 36,
-                        decoration: isSelected &&
-                                _selectedDate!.month == _today.month &&
-                                day == _selectedDate!.day
+                        decoration: (isSelected &&
+                                    _selectedDate!.month == _today.month &&
+                                    day == _selectedDate!.day) ||
+                                (_selectedDate!.month == _today.month &&
+                                    day == _selectedDate!.day)
                             ? BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blue[100])
@@ -252,9 +257,11 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                     child: Container(
                         height: 32,
                         width: 36,
-                        decoration: isSelected &&
-                                _selectedDate!.month == _today.month + 1 &&
-                                day == _selectedDate!.day
+                        decoration: (isSelected &&
+                                    _selectedDate!.month == _today.month + 1 &&
+                                    day == _selectedDate!.day) ||
+                                (_selectedDate!.month == _today.month + 1 &&
+                                    day == _selectedDate!.day)
                             ? BoxDecoration(
                                 borderRadius: BorderRadius.circular(50),
                                 color: Colors.blue[100])

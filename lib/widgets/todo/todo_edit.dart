@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:calendar_date_picker2/calendar_date_picker2.dart';
-import 'package:intl/date_symbol_data_local.dart';
 import 'package:todo_calendar_app/models/todo.dart';
+import 'package:todo_calendar_app/widgets/datePicker/custom_date_picker.dart';
 
 class TodoEdit extends StatefulWidget {
   const TodoEdit({required this.item, required this.onEditTodo, super.key});
@@ -16,14 +15,14 @@ class TodoEdit extends StatefulWidget {
 }
 
 class _TodoEditState extends State<TodoEdit> {
-  List<DateTime> _selectedDates = [];
+  DateTime _selectedDate = DateTime.now();
   Category _selectedCategory = Category.daily;
   final _contentController = TextEditingController();
 
   @override
   void initState() {
     super.initState();
-    _selectedDates = [widget.item.date];
+    _selectedDate = widget.item.date;
     _selectedCategory = widget.item.category;
     _contentController.text = widget.item.content;
   }
@@ -48,52 +47,21 @@ class _TodoEditState extends State<TodoEdit> {
     final editedTodo = Todo(
         id: widget.item.id,
         content: _contentController.text,
-        date: _selectedDates[0],
+        date: _selectedDate,
         category: _selectedCategory);
 
     widget.onEditTodo(editedTodo);
     Navigator.pop(context);
   }
 
+  void selectDate(DateTime date) {
+    setState(() {
+      _selectedDate = date;
+    });
+  }
+
   @override
   Widget build(BuildContext context) {
-    initializeDateFormatting(Localizations.localeOf(context).languageCode);
-
-    final config = CalendarDatePicker2Config(
-        selectedDayHighlightColor: Colors.blue[400],
-        weekdayLabels: ['Sun', 'Mon', 'Tue', 'Wed', 'Thu', 'Fri', 'Sat'],
-        weekdayLabelTextStyle: const TextStyle(
-          color: Colors.black87,
-          fontWeight: FontWeight.bold,
-        ),
-        firstDayOfWeek: 1,
-        controlsHeight: 50,
-        dayMaxWidth: 25,
-        animateToDisplayedMonthDate: true,
-        controlsTextStyle: const TextStyle(
-          color: Colors.black,
-          fontSize: 15,
-          fontWeight: FontWeight.bold,
-        ),
-        dayTextStyle: const TextStyle(
-          color: Colors.blue,
-          fontWeight: FontWeight.bold,
-        ),
-        disabledDayTextStyle: const TextStyle(
-          color: Colors.grey,
-        ),
-        centerAlignModePicker: true,
-        useAbbrLabelForMonthModePicker: true,
-        modePickersGap: 0,
-        modePickerTextHandler: ({required monthDate, isMonthPicker}) {
-          if (isMonthPicker ?? false) {
-            // Custom month picker text
-            return '${getLocaleShortMonthFormat(const Locale('en')).format(monthDate)} C';
-          }
-          return null;
-        },
-        firstDate: DateTime.now());
-
     return SizedBox(
       height: MediaQuery.of(context).size.height * 0.85,
       child: Padding(
@@ -115,15 +83,11 @@ class _TodoEditState extends State<TodoEdit> {
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
                   SizedBox(
-                    width: 300,
-                    child: CalendarDatePicker2(
-                      config: config,
-                      value: [_selectedDates[0]],
-                      onValueChanged: (value) {
-                        _selectedDates = value;
-                      },
-                    ),
-                  )
+                      width: 300,
+                      child: CustomDatePicker(
+                        defaultDate: _selectedDate,
+                        selectDate: selectDate,
+                      ))
                 ],
               ),
             ),
@@ -164,7 +128,7 @@ class _TodoEditState extends State<TodoEdit> {
                 )
               ],
             ),
-            const SizedBox(height: 160),
+            const SizedBox(height: 100),
             Row(
               mainAxisAlignment: MainAxisAlignment.end,
               crossAxisAlignment: CrossAxisAlignment.end,
