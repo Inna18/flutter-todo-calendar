@@ -72,7 +72,7 @@ class _TodoEditState extends State<TodoEdit> {
               mainAxisAlignment: MainAxisAlignment.center,
               children: [
                 Text(
-                  "Add New To Do",
+                  "Edit To Do",
                   style: TextStyle(fontSize: 20),
                 )
               ],

@@ -240,7 +240,7 @@ class _CustomDatePickerState extends State<CustomDatePicker> {
                             child: isToday(day)
                                 ? Container(
                                     padding: const EdgeInsets.symmetric(
-                                        horizontal: 10, vertical: 6),
+                                        horizontal: 8, vertical: 6),
                                     decoration: BoxDecoration(
                                         borderRadius: BorderRadius.circular(50),
                                         border: Border.all(
